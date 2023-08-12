@@ -104,7 +104,7 @@ Citizen.CreateThread(function()
 		local time = 3000
 		if actionsRemaining > 0 and isSentenced then
 			time = 1
-			draw2dText("~b~" .."You have " ..QBCore.Shared.Round(actionsRemaining).. ' ~b~ ~s~ more actions to complete before you can finish your service.', { 0.70, 0.955 } )
+			draw2dText("~g~" .."You have " ..QBCore.Shared.Round(actionsRemaining).. ' ~g~ ~s~ more actions to complete before you can finish your service.', { 0.70, 0.955 } )
 			DrawAvailableActions()
 			DisableViolentActions()
 
@@ -127,19 +127,20 @@ Citizen.CreateThread(function()
 
 						if (tmp_action.type == "cleaning") then
 							local cSCoords = GetOffsetFromEntityInWorldCoords(GetPlayerPed(PlayerId()), 0.0, 0.0, -5.0)
-							local vassouspawn = CreateObject(`prop_tool_broom`, cSCoords.x, cSCoords.y, cSCoords.z, 1, 1, 1)
+							local vassouspawn = TriggerEvent('animations:client:EmoteCommandStart', {"broom"})
 							local netid = ObjToNet(vassouspawn)
-
 							TaskStartScenarioInPlace(PlayerPedId(), "world_human_janitor", 0, false)
 								AttachEntityToEntity(vassouspawn,GetPlayerPed(PlayerId()),GetPedBoneIndex(GetPlayerPed(PlayerId()), 28422),-0.005,0.0,0.0,360.0,360.0,0.0,1,1,0,1,0,1)
 								vassour_net = netid
-
+							
 							Citizen.Wait(10000)
-							disable_actions = false
+							disable_actions = true
 							DetachEntity(NetToObj(vassour_net), 1, 1)
 							DeleteEntity(NetToObj(vassour_net))
 							vassour_net = nil
 							ClearPedTasks(PlayerPedId())
+							TriggerEvent('animations:client:EmoteCommandStart', {"c"})
+							disable_actions = false
 						end
 
 						if (tmp_action.type == "gardening") then
@@ -157,7 +158,7 @@ Citizen.CreateThread(function()
 							DeleteEntity(NetToObj(spatula_net))
 							spatula_net = nil
 							ClearPedTasks(PlayerPedId())
-						
+							disable_actions = false
 						end
 
 						if actionsRemaining == 0 then
@@ -253,13 +254,13 @@ RegisterCommand("comserv", function()
                 text = "Player ID", 
                 name = "id", 
                 type = "number",
-                isRequired = false, 
+                isRequired = true, 
             },
             {
                 text = "Count", 
                 name = "kamu", 
                 type = "number",
-                isRequired = false, 
+                isRequired = true, 
             },
 
 			
