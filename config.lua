@@ -23,11 +23,11 @@ Config.Outfits = { -- Set their community service outfits when they go to commun
     enabled = true, -- If false, outfits wont change
     male = {
         mask = { item = 0, texture = 0 },
-        arms = { item = 4, texture = 0 },
+        arms = { item = 17, texture = 0 },
         shirt = { item = 15, texture = 0 },
-        jacket = { item = 139, texture = 0 },
-        pants = { item = 125, texture = 3 },
-        shoes = { item = 18, texture = 0 },
+        jacket = { item = 243, texture = 18 },
+        pants = { item = 27, texture = 3 },
+        shoes = { item = 51, texture = 0 },
         accessories = { item = 0, texture = 0 },
     },
     female = {
